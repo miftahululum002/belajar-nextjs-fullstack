@@ -19,8 +19,8 @@ import Navbar from "@/components/layout/navbar";
 
 // define metadata for the application
 export const metadata: Metadata = {
-  title: "FullStack Next.js - SantriKoding.com",
-  description: "Belajar Next.js dari dasar hingga mahir bersama SantriKoding.com",
+  title: "Belajar FullStack Next.js",
+  description: "Belajar Next.js dari dasar hingga mahir",
 };
 
 // define the root layout component

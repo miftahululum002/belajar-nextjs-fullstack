@@ -16,14 +16,13 @@ export default function Home() {
             {/* badge */}
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-700">
               <span className="inline-block h-2 w-2 rounded-full bg-green-500" />
-              SantriKoding.com - Platform Belajar Coding Bahasa Indonesia
+              Belajar Coding Bahasa Indonesia
             </div>
 
             {/* heading */}
             <h1 className="text-balance text-4xl font-semibold tracking-tight text-zinc-900 sm:text-5xl">
               FullStack Next.js
             </h1>
-
             {/* description */}
             <p className="mt-4 text-pretty text-base leading-relaxed text-zinc-600 sm:text-lg">
               Belajar Fulltack Developer Modern:{" "}
@@ -36,17 +35,10 @@ export default function Home() {
 
             {/* actions */}
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/sign-up"
-                className="inline-flex items-center justify-center rounded-full bg-zinc-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-900/20"
-              >
+              <Link href="/sign-up" className="inline-flex items-center justify-center rounded-full bg-zinc-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-900/20">
                 Create account
               </Link>
-
-              <Link
-                href="/sign-in"
-                className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-5 py-3 text-sm font-semibold text-zinc-900 transition hover:bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
-              >
+              <Link href="/sign-in" className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-5 py-3 text-sm font-semibold text-zinc-900 transition hover:bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-900/10">
                 Sign in
               </Link>
             </div>
@@ -60,7 +52,7 @@ export default function Home() {
               <span className="rounded-full bg-zinc-100 px-3 py-1">Server Actions</span>
               <span className="rounded-full bg-zinc-100 px-3 py-1">Tailwind CSS</span>
               <span className="ml-auto hidden sm:inline">
-                © {new Date().getFullYear()}
+                &copy; {new Date().getFullYear()}
               </span>
             </div>
           </div>

@@ -39,12 +39,12 @@ export default function Navbar() {
 
                     <div className="flex items-center gap-2">
                         <a
-                            href="https://santrikoding.com"
+                            href="https://codopro.id"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="rounded-full bg-zinc-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-900/20"
                         >
-                            SANTRIKODING.COM
+                            Codo Pro ID
                         </a>
                     </div>
                 </div>
