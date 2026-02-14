@@ -64,7 +64,6 @@ export async function signUpAction(
     } catch (error: any) {
         // Error NEXT_REDIRECT
         if (error?.digest?.startsWith("NEXT_REDIRECT")) throw error;
-
         // Tangani error dari prisma (email duplicate)
         // NOTE: Prisma unique constraint biasanya code = P2002
         if (error?.code === "P2002") {

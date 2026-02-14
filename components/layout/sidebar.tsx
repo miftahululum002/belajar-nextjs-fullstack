@@ -42,7 +42,7 @@ export default function Sidebar() {
                         SK
                     </div>
                     <span className="text-sm font-semibold text-zinc-900">
-                        SANTRIKODING
+                        Codo Pro ID
                     </span>
                 </div>
 

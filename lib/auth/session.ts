@@ -17,14 +17,14 @@ export async function createSession(userId: string): Promise<void> {
     const tokenHash = sha256(token);
 
     // Session berlaku 30 hari
-    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+    const expiredAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
     // Simpan session ke database
     await prisma.session.create({
         data: {
             userId,
             tokenHash,
-            expiresAt,
+            expiredAt,
         },
     });
 
@@ -35,7 +35,7 @@ export async function createSession(userId: string): Promise<void> {
         secure: process.env.NODE_ENV === "production", // HTTPS hanya di production
         sameSite: "lax", // Perlindungan CSRF
         path: "/", // Berlaku untuk seluruh website
-        expires: expiresAt, // Expire sesuai database
+        expires: expiredAt, // Expire sesuai database
     });
 }
 
@@ -85,7 +85,7 @@ export async function getCurrentUser() {
     }
 
     // Cek apakah session sudah expired
-    if (session.expiresAt < new Date()) {
+    if (session.expiredAt < new Date()) {
         // Hapus session expired dari database
         await prisma.session.delete({
             where: { id: session.id },

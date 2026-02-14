@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 // import Bcrypt untuk hashing password
@@ -30,20 +31,26 @@ interface UpdateUserActionState {
 export async function updateUserAction(
     _prevState: UpdateUserActionState,
     formData: FormData,
-): Promise<UpdateUserActionState> {
+): Promise<
+    UpdateUserActionState & {
+        values?: { id: string; name: string; email: string; password?: string };
+    }
+> {
     // validasi form data menggunakan zod
-    const result = updateUserSchema.safeParse({
+    const dataInput = {
         id: formData.get("id") as string,
         name: formData.get("name") as string,
         email: formData.get("email") as string,
         password: formData.get("password") as string, // boleh kosong
-    });
-
+    };
+    const result = updateUserSchema.safeParse(dataInput);
     // jika validasi gagal
     if (!result.success) {
-        return { errors: result.error.flatten().fieldErrors };
+        return {
+            errors: result.error.flatten().fieldErrors,
+            values: dataInput,
+        };
     }
-
     try {
         // siapkan data update
         const data: {
@@ -61,7 +68,6 @@ export async function updateUserAction(
             const hashedPassword = await bcrypt.hash(result.data.password, 10);
             data.password = hashedPassword;
         }
-
         // update user di database menggunakan prisma
         await prisma.user.update({
             where: {
@@ -83,6 +89,7 @@ export async function updateUserAction(
                 errors: {
                     email: ["Email already registered"],
                 },
+                values: dataInput,
             };
         }
 
@@ -92,6 +99,7 @@ export async function updateUserAction(
                 errors: {
                     _form: ["User not found"],
                 },
+                values: dataInput,
             };
         }
 
@@ -100,6 +108,7 @@ export async function updateUserAction(
             errors: {
                 _form: ["Update failed, please try again"],
             },
+            values: dataInput,
         };
     }
 }

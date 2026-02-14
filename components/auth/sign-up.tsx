@@ -4,7 +4,7 @@ import { useActionState } from "react";
 // import server action
 import { signUpAction } from "@/app/actions/auth/sign-up";
 import TextLink from "../common/text-link";
-import FormGroup from "../common/form-group";
+import FormGroup from "../common/form/form-group";
 // initial state untuk form
 const initialState = { errors: {} as Record<string, string[]> };
 export function SignUpForm() {
@@ -88,7 +88,7 @@ export function SignUpForm() {
                                 </button>
                                 <p className="mt-4 text-center text-xs text-zinc-500">
                                     Already have an account?{" "}
-                                    <TextLink text="Sign In" url="/sign-in" />
+                                    <TextLink url="/sign-in">Sign In</TextLink>
                                 </p>
                             </div>
                         </form>

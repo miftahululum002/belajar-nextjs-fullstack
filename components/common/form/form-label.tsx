@@ -1,4 +1,4 @@
-import Tooltip from "./tooltip";
+import Tooltip from "../tooltip";
 
 type FormLabelProps = {
     htmlFor: string;
@@ -8,13 +8,7 @@ type FormLabelProps = {
 
 export default function FormLabel({ htmlFor, text, required = false }: FormLabelProps) {
     return (
-        // <label htmlFor={htmlFor} className="block text-sm font-medium text-zinc-800">
-        //     {text} {required ? (<span className="font-bold text-base text-red-500">*</span>) : null}
-        // </label>
-        <label
-            htmlFor={htmlFor}
-            className="block text-sm font-medium text-zinc-800"
-        >
+        <label htmlFor={htmlFor} className="block text-sm font-medium text-zinc-800">
             {text}
             {required && (
                 <Tooltip text="Field ini wajib diisi">

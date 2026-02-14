@@ -1,126 +1,91 @@
 "use client";
 
-// import Link dari next/link
-import Link from "next/link";
-
-// import useActionState dari react
+import { useState, ChangeEvent } from "react";
 import { useActionState } from "react";
-
-// import server action
 import { createUserAction } from "@/app/actions/user/user-create";
+import FormGroup from "../common/form/form-group";
+import ButtonCancel from "../common/button/button-cancel";
 
-// initial state untuk form
-const initialState = { errors: {} as Record<string, string[]> };
+type FormDataState = {
+    name: string;
+    email: string;
+    password: string;
+};
+
+const initialFormData: FormDataState = {
+    name: "",
+    email: "",
+    password: "",
+};
 
 export default function UserCreateForm() {
+    const [formData, setFormData] = useState(initialFormData);
+    const [formState, formAction, isPending] = useActionState(createUserAction, { errors: {} });
 
-    // useActionState untuk menghandle state form dan action
-    const [formState, formAction, isPending] = useActionState(createUserAction, initialState);
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
 
     return (
         <div className="relative">
             {/* Error umum */}
-            {formState?.errors?._form?.length ? (
+            {formState?.errors?._form?.length && (
                 <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                     {formState.errors._form[0]}
                 </div>
-            ) : null}
+            )}
 
             <form className="space-y-5" action={formAction} noValidate>
                 {/* Name */}
-                <div>
-                    <label
-                        htmlFor="name"
-                        className="block text-sm font-medium text-zinc-800"
-                    >
-                        Full Name
-                    </label>
-                    <div className="mt-2">
-                        <input
-                            id="name"
-                            name="name"
-                            type="text"
-                            autoComplete="name"
-                            className={`block w-full rounded-2xl border bg-white/70 px-4 py-3 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition focus:ring-2 focus:ring-zinc-900/10 ${formState?.errors?.name?.length ? "border-red-300" : "border-zinc-200"
-                                }`}
-                            placeholder="User full name"
-                            disabled={isPending}
-                        />
-                    </div>
-
-                    {/* Name error */}
-                    {formState?.errors?.name?.length ? (
-                        <p className="mt-2 text-sm text-red-600">{formState.errors.name[0]}</p>
-                    ) : null}
-                </div>
+                <FormGroup
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    label="Name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    disabled={isPending}
+                    isError={(formState?.errors?.name?.length ?? 0) > 0}
+                    errorMessage={formState?.errors?.name?.[0] ?? ""}
+                />
 
                 {/* Email */}
-                <div>
-                    <label
-                        htmlFor="email"
-                        className="block text-sm font-medium text-zinc-800"
-                    >
-                        Email address
-                    </label>
-                    <div className="mt-2">
-                        <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            autoComplete="email"
-                            className={`block w-full rounded-2xl border bg-white/70 px-4 py-3 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition focus:ring-2 focus:ring-zinc-900/10 ${formState?.errors?.email?.length ? "border-red-300" : "border-zinc-200"
-                                }`}
-                            placeholder="you@example.com"
-                            disabled={isPending}
-                        />
-                    </div>
-
-                    {/* Email error */}
-                    {formState?.errors?.email?.length ? (
-                        <p className="mt-2 text-sm text-red-600">{formState.errors.email[0]}</p>
-                    ) : null}
-                </div>
+                <FormGroup
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    label="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    disabled={isPending}
+                    isError={(formState?.errors?.email?.length ?? 0) > 0}
+                    errorMessage={formState?.errors?.email?.[0] ?? ""}
+                />
 
                 {/* Password */}
-                <div>
-                    <label
-                        htmlFor="password"
-                        className="block text-sm font-medium text-zinc-800"
-                    >
-                        Password
-                    </label>
-                    <div className="mt-2">
-                        <input
-                            id="password"
-                            name="password"
-                            type="password"
-                            autoComplete="new-password"
-                            className={`block w-full rounded-2xl border bg-white/70 px-4 py-3 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition focus:ring-2 focus:ring-zinc-900/10 ${formState?.errors?.password?.length ? "border-red-300" : "border-zinc-200"
-                                }`}
-                            placeholder="••••••••"
-                            disabled={isPending}
-                        />
-                    </div>
-
+                <FormGroup
+                    id="password"
+                    name="password"
+                    type="password"
+                    required
+                    label="Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    disabled={isPending}
+                    isError={(formState?.errors?.password?.length ?? 0) > 0}
+                    errorMessage={formState?.errors?.password?.[0] ?? ""}
+                >
                     <p className="mt-2 text-sm text-zinc-500">
                         Must be at least 8 characters.
                     </p>
-
-                    {/* Password error */}
-                    {formState?.errors?.password?.length ? (
-                        <p className="mt-2 text-sm text-red-600">{formState.errors.password[0]}</p>
-                    ) : null}
-                </div>
+                </FormGroup>
 
                 {/* Actions */}
                 <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-end">
-                    <Link
-                        href="/users"
-                        className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-5 py-3 text-sm font-semibold text-zinc-800 transition hover:bg-zinc-50"
-                    >
-                        Cancel
-                    </Link>
-
+                    <ButtonCancel url="/users">Cancel</ButtonCancel>
                     <button
                         type="submit"
                         disabled={isPending}

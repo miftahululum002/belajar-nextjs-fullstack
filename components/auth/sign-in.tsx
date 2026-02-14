@@ -3,8 +3,8 @@
 import { useActionState } from 'react'
 // import signInAction dari server actions
 import { signInAction } from "@/app/actions/auth/sign-in";
-import FormLabel from "../common/form-label";
 import TextLink from "../common/text-link";
+import FormLabel from '../common/form/form-label';
 // initial state untuk form
 const initialState = { errors: {} as Record<string, string[]> };
 

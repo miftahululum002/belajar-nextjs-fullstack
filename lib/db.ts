@@ -1,22 +1,20 @@
-// import prisma adapter mariadb
+// prisma.ts
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-
-// import prisma client
 import { PrismaClient } from "./generated/prisma/client";
 
-// ensure only a single instance of prisma client is created
-const globalForPrisma = global as unknown as {
-    prisma: PrismaClient;
-};
+// TypeScript global type
+declare global {
+    var prisma: PrismaClient | undefined;
+}
 
 // initialize prisma adapter
 const adapter = new PrismaMariaDb(process.env.DATABASE_URL as string);
 
-// initialize prisma client
-const prisma =
-    globalForPrisma.prisma ||
+// Use singleton pattern for Next.js dev
+export const prisma =
+    global.prisma ||
     new PrismaClient({
         adapter,
     });
 
-export { prisma };
+if (process.env.NODE_ENV !== "production") global.prisma = prisma;
