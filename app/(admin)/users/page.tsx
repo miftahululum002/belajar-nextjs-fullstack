@@ -1,5 +1,4 @@
 // import Link
-import Link from "next/link";
 // import authIsRequired to protect the users page
 import { authIsRequired } from "@/lib/auth/middleware";
 
